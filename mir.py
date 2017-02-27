@@ -6,6 +6,7 @@ import wave
 import os
 import struct
 import matplotlib.pyplot as plt
+import tensorflow as tf
 
 def np_to_int16_bytes(x):
     x = np.int16(x * 2**(16-1))

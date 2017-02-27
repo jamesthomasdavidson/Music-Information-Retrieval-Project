@@ -1,4 +1,3 @@
-import numpy as np
-import tensorflow as tf
+from mir import *
 
-print("hi")
+print("hello world")
