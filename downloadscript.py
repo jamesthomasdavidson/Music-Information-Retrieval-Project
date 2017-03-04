@@ -11,13 +11,13 @@ if not os.path.exists(savedir):
     os.makedirs(savedir)
 
 def make_savepath(title, artist, savedir=savedir):
-    return os.path.join(savedir, "%s--%s.mp3" % (title, artist))
+    return os.path.join(savedir, "%s--%s.wav" % (title, artist))
 
 # create YouTube downloader
 options = {
     'format': 'bestaudio/best', # choice of quality
     'extractaudio' : True,      # only keep the audio
-    'audioformat' : "wav",      # convert to mp3 
+    'audioformat' : "wav",      # convert to wav
     'outtmpl': '%(id)s',        # name the file the ID of the video
     'noplaylist' : True,}       # only download single song, not playlist
 ydl = youtube_dl.YoutubeDL(options)
