@@ -15,16 +15,12 @@ def make_savepath(title, artist, savedir=savedir):
 
 # create YouTube downloader
 options = {
-    'verbose': True,
+    'verbose': False,
     'outtmpl': '%(id)s.%(ext)s',
     'format': 'bestaudio/best', # choice of quality
     'extractaudio' : True,      # only keep the audio
     'audioformat' : "wav",      # convert to wav
-    'outtmpl': '%(id)s',        # name the file the ID of the video
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'wav',
-    }],       
+    'outtmpl': '%(id)s',        # name the file the ID of the video       
     'noplaylist' : True,
     }       # only download single song, not playlist
 ydl = youtube_dl.YoutubeDL(options)
