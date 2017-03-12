@@ -3,7 +3,7 @@ import pandas as pd
 import os
 import traceback
 
-CSV = "videos.csv"
+CSV = "buzzfeed.csv"
 
 # create directory
 savedir = "data"
