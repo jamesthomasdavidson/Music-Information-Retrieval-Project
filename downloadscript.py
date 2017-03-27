@@ -2,16 +2,21 @@ import youtube_dl
 import pandas as pd
 import os
 import traceback
+import pickle
+from song import Song
 
-CSV = "buzzfeed.csv"
+CSV = "mastercsv.csv"
+song_number = 0
+mash_id = 0
+song_list = []
 
 # create directory
 savedir = "data"
 if not os.path.exists(savedir):
     os.makedirs(savedir)
 
-def make_savepath(title, artist, savedir=savedir):
-    return os.path.join(savedir, "%s%s.wav" % (title, artist))
+def make_savepath(id, savedir=savedir):
+    return os.path.join(savedir, "%s.wav" % id)
 
 # create YouTube downloader
 options = {
@@ -33,10 +38,19 @@ with ydl:
 
     # for each row, download
     for _, row in df.iterrows():
+        if (song_number % 2 == 0):
+            mash_id+=1
+
         print ("Downloading: {} from {}...".format(row.Title,row.Link ) )
 
         # download location, check for progress
-        savepath = make_savepath(row.Title, row.Artist)
+        song_number+=1
+        savepath = make_savepath(song_number)
+
+
+        song = Song(title = row.Title, artist= row.Artist, mash_id=mash_id, song_id=song_number, filename=savepath)
+        song_list.append(song)
+
         try:
             os.stat(savepath)
             print ("{} already downloaded, continuing...".format(savepath))
@@ -51,5 +65,15 @@ with ydl:
 
             except Exception as e:
                 print ("Can't download audio!\n")
+
+
+# create pickle file
+f = open('songs_pickle.pck', mode='wb')
+pickle.dump(song_list, file=f)
+
+
+
+
+
 
 
