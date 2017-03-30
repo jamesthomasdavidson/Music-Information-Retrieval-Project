@@ -67,9 +67,11 @@ with ydl:
                 print ("Can't download audio!\n")
 
 
-# create pickle file
+for song in song_list:
+    song._filename = 'good' + song._filename
+
 f = open('songs_pickle.pck', mode='wb')
-pickle.dump(song_list, file=f)
+pickle.dump(song_list, file=f, protocol=2)
 
 
 

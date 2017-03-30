@@ -1,7 +1,11 @@
 import pickle
-from song import Song
+from song import Song, Mashup
 import ffmpy
 import os
+import marsyas
+
+with open('songs_pickle.pck', 'rb') as f:
+    songs = pickle.load(f, encoding='latin1')
 
 savedir = "gooddata"
 if not os.path.exists(savedir):
@@ -10,19 +14,46 @@ if not os.path.exists(savedir):
 def make_savepath(id, savedir=savedir):
     return os.path.join(savedir, "%s.wav" % id)
 
-with open('songs_pickle.pck', 'rb') as f:
-    songs = pickle.load(f, encoding='latin1')
-
-
-
 # for song in songs:
 
 for song in songs:
 	save_path = make_savepath(song._song_id)
-	ff = ffmpy.FFmpeg(
-		global_options=["-i " + song._filename + " -ac 1 " + save_path]
-		# inputs={song._filename: None},
-		# outputs={save_path: None},
-		)
+	if (os.path.isfile(save_path)):
+		print('continuing...')
+	else:
+		ff = ffmpy.FFmpeg(
+			global_options=["-i " + song._filename + " -ac 1 " + save_path]
+			)
 
-	ff.run()
+		ff.run()
+
+
+mashups = []
+N= len(songs)
+
+for i in range(N):
+	if i%2==0:
+		mashup = []
+		if(i!= N-1):
+			j = i+1
+			song1 = songs[j]
+			song2 = songs[j-1]
+
+		mashup.append(song1)
+		mashup.append(song2)
+
+		m = Mashup(songs=mashup)
+
+		mashups.append(m)
+
+
+
+
+
+
+
+
+
+	
+
+
